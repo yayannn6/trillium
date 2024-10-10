@@ -19,19 +19,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account', 'sale'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
+        'views/sales_view.xml'
         # 'views/templates.xml',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'your_module_name/static/src/img/trillium_logo.png',
-        ],
-    }
     # only loaded in demonstration mode
     # 'demo': [
     #     'demo/demo.xml',

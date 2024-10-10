@@ -1,6 +1,6 @@
 <odoo>
   <data>
-    <template id="report_invoice_document_trillium" inherit_id="account.report_invoice_document">
+    <template id="report_quotation_document_trillium" inherit_id="sale.report_saleorder_document">
         <xpath expr="//div[@class='page']" position="replace">
             <div class="page">
                  <table style="width: 80%; border-collapse: collapse; margin-top: 20px;border: 1px white">
@@ -9,10 +9,10 @@
                             <p style="margin: 0; font-weight: bold;">Bill To:</p>
                         </td>
                         <td style="vertical-align: top; padding-left: 20px;">
-                            <p style="margin: 0;" t-field="o.partner_id.name"/>
-                            <p style="margin: 0;" t-field="o.partner_id.street"/>
-                            <p style="margin: 0;" t-field="o.partner_id.city"/> <span t-field="o.partner_id.zip"/>
-                            <p style="margin: 0;" t-field="o.partner_id.country_id.name"/>
+                            <p style="margin: 0;" t-field="doc.partner_id.name"/>
+                            <p style="margin: 0;" t-field="doc.partner_id.street"/>
+                            <p style="margin: 0;" t-field="doc.partner_id.city"/> <span t-field="doc.partner_id.zip"/>
+                            <p style="margin: 0;" t-field="doc.partner_id.country_id.name"/>
                             <br/>
                             <br/>
                             
@@ -24,7 +24,7 @@
                             <p style="margin: 0; font-weight: bold;">Attn:</p>
                         </td>
                         <td style="vertical-align: top; padding-left: 20px;">
-                            <p style="margin: 0;" t-field="o.attn"/> <!-- Jika ada field khusus untuk contact -->
+                            <p style="margin: 0;" t-field="doc.attn"/> <!-- Jika ada field khusus untuk contact -->
                             <br/>
                             <br/>
                             
@@ -36,7 +36,7 @@
                             <p style="margin: 0; font-weight: bold;">Project:</p>
                         </td>
                         <td style="vertical-align: top; padding-left: 20px;">
-                            <p style="margin: 0;" t-field="o.project_name"/> <!-- Field untuk nama project -->
+                            <p style="margin: 0;" t-field="doc.project_name"/> <!-- Field untuk nama project -->
                             <br/>
                             <br/>
                         </td>
@@ -63,7 +63,7 @@
                 <table class="table table-sm mt32" style="width: 100%; border-collapse: collapse; border-top: 1px solid white; border-bottom: 1px solid white; border-right: 1px solid white;border-left: 1px solid white;">
                     <!--<tbody>-->
                       <t t-set="x" t-value="1"/>
-                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="doc.order_line" t-as="line">
                             <tr>
                                 <td style="width: 10%; text-align: left; padding: 8px;">
                                   <span t-esc="x"/>
@@ -72,7 +72,7 @@
                                     <t t-esc="line.name"/>
                                 </td>
                                 <td style="width: 15%; text-align: center; padding: 8px;">
-                                    <t t-esc="line.quantity"/> <t t-esc="line.product_uom_id.name"/>
+                                    <t t-esc="line.product_uom_qty"/> <t t-esc="line.product_uom.name"/>
                                 </td>
                                 <td style="width: 15%; text-align: center; padding: 8px;">
                                     $ <t t-esc="line.price_unit"/>
@@ -94,7 +94,7 @@
                             <td style="width: 20%; padding: 5px; text-align: right;"><strong>Total:</strong></td>
                             <td style="padding: 5px; text-align: right;">
                                 <strong>
-                                    $ <t t-esc="o.amount_untaxed"/>
+                                    $ <t t-esc="doc.amount_untaxed"/>
                                 </strong>
                             </td>
                         </tr>
@@ -103,7 +103,7 @@
                             <td style="padding: 5px; text-align: right;"><strong>Less Deposit:</strong></td>
                             <td style="padding: 5px; text-align: right;">
                                 <strong>
-                                    $ <t t-esc="o.amount_total - o.amount_residual"/>
+                                    $ 0
                                 </strong>
                             </td>
                         </tr>
@@ -112,7 +112,7 @@
                             <td style="padding: 5px; text-align: right;"><strong>Balance:</strong></td>
                             <td style="padding: 5px; text-align: right;">
                                 <strong>
-                                    $ <t t-esc="o.amount_residual"/>
+                                    $ 0
                                 </strong>
                             </td>
                         </tr>
@@ -121,7 +121,7 @@
                             <td style="padding: 5px; text-align: right;"><strong>9% GST:</strong></td>
                             <td style="padding: 5px; text-align: right;">
                                 <strong>
-                                    $ <t t-esc="o.amount_tax"/>
+                                    $ <t t-esc="doc.amount_tax"/>
                                 </strong>
                             </td>
                         </tr>
@@ -130,7 +130,7 @@
                             <td style="padding: 5px; text-align: right;"><strong>Total SGD:</strong></td>
                             <td style="padding: 5px; text-align: right;">
                                 <strong>
-                                    $ <t t-esc="o.amount_total"/>
+                                    $ <t t-esc="doc.amount_total"/>
                                 </strong>
                             </td>
                         </tr>
